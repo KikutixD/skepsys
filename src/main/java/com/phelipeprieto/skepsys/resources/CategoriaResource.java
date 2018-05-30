@@ -1,30 +1,28 @@
 package com.phelipeprieto.skepsys.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.boot.autoconfigure.jms.artemis.ArtemisNoOpBindingRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phelipeprieto.skepsys.domain.Categoria;
+import com.phelipeprieto.skepsys.services.CategoriaService;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
+	
+	@Autowired
+	private CategoriaService service;
+		
 
-	@RequestMapping(method=RequestMethod.GET)
-	public List<Categoria> listar() {
+	@RequestMapping(value="/{id_categoria}" ,method=RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id_categoria) {
+		Categoria obj = service.find(id_categoria);
+		return ResponseEntity.ok().body(obj);
 		
-		Categoria cat1 = new Categoria(1, "Sistemas Web");
-		Categoria cat2 = new Categoria(2, "Sistemas Desk Top");
-		
-		List<Categoria> lista = new ArrayList<>();
-		lista.add(cat1);	
-		lista.add(cat2);
-		
-		return lista;
 	}
 
 }
