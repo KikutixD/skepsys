@@ -67,7 +67,7 @@ public class SkepsysApplication implements CommandLineRunner {
 		Estado est2 = new Estado(null, "São Paulo");
 		
 		Cidade c1 = new Cidade(null, "Uberlandia", est1);
-		Cidade c2 = new Cidade(null, "São Paulo", est2);
+		Cidade c2 = new Cidade(null, "Garça", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 		
 		
@@ -78,9 +78,9 @@ public class SkepsysApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377",TipoCliente.PESSOAFISICA);
-		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
-		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
+		Cliente cli1 = new Cliente(null, "Phelipe Prieto", "Phelipe.prieto@skepsys.com.br", "464.870.258-10",TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("14982238179", "1494713251"));
+		Endereco e1 = new Endereco(null, "Rua Francisco Paranhos", "90", "Casa", "Frei Aurelio", "17400000", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
