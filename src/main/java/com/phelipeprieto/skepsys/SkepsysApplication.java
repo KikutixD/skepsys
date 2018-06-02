@@ -1,5 +1,6 @@
 package com.phelipeprieto.skepsys;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.phelipeprieto.skepsys.domain.Cidade;
 import com.phelipeprieto.skepsys.domain.Cliente;
 import com.phelipeprieto.skepsys.domain.Endereco;
 import com.phelipeprieto.skepsys.domain.Estado;
+import com.phelipeprieto.skepsys.domain.Pagamento;
+import com.phelipeprieto.skepsys.domain.PagamentoComBoleto;
+import com.phelipeprieto.skepsys.domain.PagamentoComCartao;
+import com.phelipeprieto.skepsys.domain.Pedido;
 import com.phelipeprieto.skepsys.domain.Produto;
+import com.phelipeprieto.skepsys.domain.enuns.EstadoPagamento;
 import com.phelipeprieto.skepsys.domain.enuns.TipoCliente;
 import com.phelipeprieto.skepsys.repositories.CategoriaRepository;
 import com.phelipeprieto.skepsys.repositories.CidadeRepository;
 import com.phelipeprieto.skepsys.repositories.ClienteRepository;
 import com.phelipeprieto.skepsys.repositories.EnderecoRepository;
 import com.phelipeprieto.skepsys.repositories.EstadoRepository;
+import com.phelipeprieto.skepsys.repositories.PagamentoRepository;
+import com.phelipeprieto.skepsys.repositories.PedidoRepository;
 import com.phelipeprieto.skepsys.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +44,10 @@ public class SkepsysApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoReposytory;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -86,6 +98,22 @@ public class SkepsysApplication implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:39"), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		
+		pedidoReposytory.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
 	}
 	

@@ -2,8 +2,8 @@ package com.phelipeprieto.skepsys.domain.enuns;
 
 public enum TipoCliente {
 
-		PESSOAFISICA(1,"Pessoa Fisica"),
-		PESSOAJURIDICA(2, "Pessoa Juridica");
+	PESSOAFISICA(1,"Pessoa Fisica"),
+	PESSOAJURIDICA(2, "Pessoa Juridica");
 	
 	private int id_tppessoa;
 	private String nm_tppessoa;
