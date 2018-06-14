@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.phelipeprieto.skepsys.domain.enuns.EstadoPagamento;
 
 @Entity
@@ -25,7 +25,7 @@ public abstract class Pagamento implements Serializable{
 	private Integer id_pgto;
 	private Integer estado_pgto;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="id_pgto")
 	@MapsId
