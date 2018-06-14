@@ -1,6 +1,7 @@
 package com.phelipeprieto.skepsys;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.phelipeprieto.skepsys.domain.Cidade;
 import com.phelipeprieto.skepsys.domain.Cliente;
 import com.phelipeprieto.skepsys.domain.Endereco;
 import com.phelipeprieto.skepsys.domain.Estado;
+import com.phelipeprieto.skepsys.domain.ItemPedido;
 import com.phelipeprieto.skepsys.domain.Pagamento;
 import com.phelipeprieto.skepsys.domain.PagamentoComBoleto;
 import com.phelipeprieto.skepsys.domain.PagamentoComCartao;
@@ -25,6 +27,7 @@ import com.phelipeprieto.skepsys.repositories.CidadeRepository;
 import com.phelipeprieto.skepsys.repositories.ClienteRepository;
 import com.phelipeprieto.skepsys.repositories.EnderecoRepository;
 import com.phelipeprieto.skepsys.repositories.EstadoRepository;
+import com.phelipeprieto.skepsys.repositories.ItemPedidoRepository;
 import com.phelipeprieto.skepsys.repositories.PagamentoRepository;
 import com.phelipeprieto.skepsys.repositories.PedidoRepository;
 import com.phelipeprieto.skepsys.repositories.ProdutoRepository;
@@ -48,6 +51,8 @@ public class SkepsysApplication implements CommandLineRunner {
 	private PedidoRepository pedidoReposytory;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -115,6 +120,18 @@ public class SkepsysApplication implements CommandLineRunner {
 		pedidoReposytory.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 2000.00, 1);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 80.00, 1);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 800.00, 2);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 	
 	
